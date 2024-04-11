@@ -75,7 +75,7 @@ const playMusic = (track, pause = false) => {
 }
 async function displayAlbums()
 {
-    let a = await fetch("/assets/songs");
+    let a = await fetch("assets/songs");
     let response = await a.text();
     let cardContainer = document.querySelector(".cardContainer");
 
@@ -89,7 +89,7 @@ async function displayAlbums()
         {
             let folder = e.href.split("/").slice(-1)[0];
             // get metadata of the folder
-            let a = await fetch(`/assets/songs/${folder}/info.json`);
+            let a = await fetch(`assets/songs/${folder}/info.json`);
             let response = await a.json();
 
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
@@ -197,7 +197,7 @@ async function main()
     
     // add mute option
     document.querySelector(".volume img").addEventListener("click", e =>{
-        if(e.target.src == "/assets/images/volume.svg")
+        if(e.target.src == "assets/images/volume.svg")
         {
             e.target.src = "assets/images/mute.svg"
             currentSong.volume = 0;

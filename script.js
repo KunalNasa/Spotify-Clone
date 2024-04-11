@@ -18,7 +18,7 @@ function secondsToMinutesSeconds(seconds) {
 async function getSongs(folder)
 {
     currentFolder = folder;
-    let a = await fetch(`Spotify/${folder}/`);
+    let a = await fetch(`/${folder}/`);
     let response = await a.text();
 
     let div = document.createElement("div");
@@ -61,7 +61,7 @@ async function getSongs(folder)
 
 const playMusic = (track, pause = false) => {
     // let audio = new Audio("assets/songs/" + track);
-    currentSong.src = `/Spotify/${currentFolder}/` + track;
+    currentSong.src = `/${currentFolder}/` + track;
     if(!pause)
     {
         currentSong.play();
@@ -75,7 +75,7 @@ const playMusic = (track, pause = false) => {
 }
 async function displayAlbums()
 {
-    let a = await fetch("Spotify/assets/songs");
+    let a = await fetch("/assets/songs");
     let response = await a.text();
     let cardContainer = document.querySelector(".cardContainer");
 
@@ -89,7 +89,7 @@ async function displayAlbums()
         {
             let folder = e.href.split("/").slice(-1)[0];
             // get metadata of the folder
-            let a = await fetch(`Spotify/assets/songs/${folder}/info.json`);
+            let a = await fetch(`/assets/songs/${folder}/info.json`);
             let response = await a.json();
 
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
@@ -197,7 +197,7 @@ async function main()
     
     // add mute option
     document.querySelector(".volume img").addEventListener("click", e =>{
-        if(e.target.src == "Spotify/assets/images/volume.svg")
+        if(e.target.src == "/assets/images/volume.svg")
         {
             e.target.src = "assets/images/mute.svg"
             currentSong.volume = 0;

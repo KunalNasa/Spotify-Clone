@@ -11,7 +11,7 @@ function secondsToMinutesSeconds(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
 
-    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0'); 
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
     return `${formattedMinutes}:${formattedSeconds}`;
@@ -20,10 +20,11 @@ async function getSongs(folder)
 {
     currentFolder = folder;
     let a = await fetch(`https://raw.githubusercontent.com/KunalNasa/Spotify-Clone/main/${folder}/`);
-    let response = await a.text();
+    let response = await a.text(); 
 
     let div = document.createElement("div");
     div.innerHTML = response;
+
     let as = div.getElementsByTagName("a");
     songs = [];
     for (let index = 0; index < as.length; index++) {
@@ -38,14 +39,13 @@ async function getSongs(folder)
     songUL.innerHTML = "";
     for (const song of songs) {
         songUL.innerHTML = songUL.innerHTML + `<li>
-        <img src="./assets/images/music.svg" alt="">
+        <img src="https://kunalnasa.github.io/Spotify-Clone/assets/images/music.svg" alt="">
         <div class="info">
           <div>${song.replaceAll("%20", " ")}</div>
-
         </div>
         <div class="playnow">
           <span>Play Now</span>
-        <img src="./assets/images/play.svg" alt="">
+        <img src="https://kunalnasa.github.io/Spotify-Clone/assets/images/play.svg" alt="">
         </div>
       </li>`;
     } 
@@ -60,18 +60,19 @@ async function getSongs(folder)
 }
 
 const playMusic = (track, pause = false) => {
-    currentSong.src = `https://raw.githubusercontent.com/KunalNasa/Spotify-Clone/main/${currentFolder}/` + track;
+    currentSong.src = `https://kunalnasa.github.io/Spotify-Clone/${currentFolder}/` + track;
     if(!pause)
     {
         currentSong.play();
-        play.src = "assets/images/pause.svg";
+        play.src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/pause.svg"; 
     }
-    document.querySelector(".songinfo").innerHTML = decodeURI(track);
+    document.querySelector(".songinfo").innerHTML = decodeURI(track); 
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 }
+
 async function displayAlbums()
 {
-    let a = await fetch("https://raw.githubusercontent.com/KunalNasa/Spotify-Clone/main/assets/songs");
+    let a = await fetch("https://kunalnasa.github.io/Spotify-Clone/assets/songs");
     let response = await a.text();
     let cardContainer = document.querySelector(".cardContainer");
 
@@ -84,12 +85,12 @@ async function displayAlbums()
         if(e.href.includes("/songs/"))
         {
             let folder = e.href.split("/").slice(-1)[0];
-            let a = await fetch(`https://raw.githubusercontent.com/KunalNasa/Spotify-Clone/main/assets/songs/${folder}/info.json`);
+            let a = await fetch(`https://kunalnasa.github.io/Spotify-Clone/assets/songs/${folder}/info.json`);
             let response = await a.json();
 
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
-            <div class="play"><img class="invert" src="./assets/images/play.svg" alt="Play Button"></div>
-            <img src="./assets/songs/${folder}/cover.jpg" alt="${folder}">
+            <div class="play"><img class="invert" src="https://kunalnasa.github.io/Spotify-Clone/assets/images/play.svg" alt="Play Button"></div>
+            <img src="https://kunalnasa.github.io/Spotify-Clone/assets/songs/${folder}/cover.jpg" alt="${folder}">
             <h2>${response.title}</h2>
             <p>${response.description}</p>
           </div>`;
@@ -116,12 +117,12 @@ async function main()
         if(currentSong.paused)
         {
             currentSong.play();
-            play.src = "assets/images/pause.svg";
+            play.src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/pause.svg";
         }
         else
         {
             currentSong.pause();
-            play.src = "assets/images/play.svg";
+            play.src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/play.svg";
         }
     })
 
@@ -156,6 +157,7 @@ async function main()
             playMusic(songs[index - 1]);
         }
     });   
+
     next.addEventListener("click", () => {
         let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
         if(index == songs.length - 1)
@@ -172,21 +174,21 @@ async function main()
         console.log("Setting volume to", e.target.value);
         if(e.target.value != 0)
         {
-            document.querySelector(".volume img").src = "assets/images/volume.svg";
+            document.querySelector(".volume img").src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/volume.svg";
         }
         currentSong.volume = parseInt(e.target.value)/100;
     });
     
     document.querySelector(".volume img").addEventListener("click", e =>{
-        if(e.target.src == "https://raw.githubusercontent.com/KunalNasa/Spotify-Clone/main/assets/images/volume.svg")
+        if(e.target.src == "https://kunalnasa.github.io/Spotify-Clone/assets/images/volume.svg")
         {
-            e.target.src = "assets/images/mute.svg"
+            e.target.src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/mute.svg"
             currentSong.volume = 0;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
         }
         else
         {
-            e.target.src = "assets/images/volume.svg"
+            e.target.src = "https://kunalnasa.github.io/Spotify-Clone/assets/images/volume.svg"
             currentSong.volume = 0.1;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 10;
         }
